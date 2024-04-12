@@ -20,14 +20,15 @@ public class RaceController {
         this.raceService = raceService;
     }
 
-    @PostMapping(value = "/race", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody Race addRace(@Valid @RequestBody Race race) {
         return raceService.addRace(race);
     }
 
-    @GetMapping(value = "/race", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public List<Race> getRaces() {
         return raceService.getRaces();
-    }}
+    }
+}
