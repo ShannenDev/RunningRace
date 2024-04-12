@@ -21,5 +21,5 @@ public class ResultEntity {
     @OneToOne
     private RaceEntity raceEntity;
 
-    private Long time;
+    private Double time;
 }

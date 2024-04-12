@@ -1,10 +1,19 @@
 package ie.shannen.runningrace.service;
 
+import ie.shannen.runningrace.controller.model.ResultRequest;
+import ie.shannen.runningrace.controller.model.ResultResponse;
+import ie.shannen.runningrace.converter.ResultConverter;
+import ie.shannen.runningrace.exception.NotFoundException;
 import ie.shannen.runningrace.repository.RaceRepository;
 import ie.shannen.runningrace.repository.ResultRepository;
 import ie.shannen.runningrace.repository.RunnerRepository;
+import ie.shannen.runningrace.repository.model.RaceEntity;
+import ie.shannen.runningrace.repository.model.ResultEntity;
+import ie.shannen.runningrace.repository.model.RunnerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class ResultService {
@@ -17,5 +26,21 @@ public class ResultService {
         this.resultRepository = resultRepository;
         this.raceRepository = raceRepository;
         this.runnerRepository = runnerRepository;
+    }
+
+    public ResultResponse addResult(ResultRequest result) {
+        RaceEntity race = raceRepository.findById(result.getRaceId())
+                .orElseThrow(() -> new NotFoundException("Race not found with id: " + result.getRaceId()));
+        RunnerEntity runner = runnerRepository.findById(result.getRunnerId())
+                .orElseThrow(() -> new NotFoundException("Runner not found with id: " + result.getRunnerId()));
+
+        ResultEntity resultEntity = new ResultEntity();
+        resultEntity.setRaceEntity(race);
+        resultEntity.setRunnerEntity(runner);
+        resultEntity.setTime(result.getTime());
+        resultEntity.setId(UUID.randomUUID());
+        ResultEntity savedResult = resultRepository.save(resultEntity);
+
+        return ResultConverter.entityToDto(savedResult);
     }
 }
