@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/race")
 public class RaceController {
     private final RaceService raceService;
 
@@ -19,13 +20,13 @@ public class RaceController {
         this.raceService = raceService;
     }
 
-    @PostMapping(value = "/addRace", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/race", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody Race addRace(@Valid @RequestBody Race race) {
         return raceService.addRace(race);
     }
 
-    @GetMapping(value = "/getRaces", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/race", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public List<Race> getRaces() {
         return raceService.getRaces();

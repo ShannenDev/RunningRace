@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/runner")
 public class RunnerController {
 
     private final RunnerService runnerService;
@@ -20,13 +21,13 @@ public class RunnerController {
         this.runnerService = runnerService;
     }
 
-    @PostMapping(value = "/addRunner", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody Runner addRunner(@Valid @RequestBody Runner runner) {
         return runnerService.addRunner(runner);
     }
 
-    @GetMapping(value = "/getRunners", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public List<Runner> getRunners() {
         return runnerService.getRunners();
