@@ -7,6 +7,8 @@ import ie.shannen.runningrace.repository.model.RaceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,5 +27,11 @@ public class RaceService {
         RaceEntity savedEntity = raceRepository.save(raceEntity);
 
         return RaceConverter.entityToDto(savedEntity);
+    }
+
+    public List<Race> getRaces() {
+        List<RaceEntity> raceEntities = new ArrayList<>();
+        raceRepository.findAll().forEach(raceEntities::add);
+        return RaceConverter.entityListToDtoList(raceEntities);
     }
 }

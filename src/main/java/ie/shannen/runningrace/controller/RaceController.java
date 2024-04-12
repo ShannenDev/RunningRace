@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class RaceController {
     private final RaceService raceService;
@@ -22,4 +24,9 @@ public class RaceController {
     public @ResponseBody Race addRace(@Valid @RequestBody Race race) {
         return raceService.addRace(race);
     }
-}
+
+    @GetMapping(value = "/getRaces", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Race> getRaces() {
+        return raceService.getRaces();
+    }}
