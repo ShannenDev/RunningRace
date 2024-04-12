@@ -1,5 +1,6 @@
 package ie.shannen.runningrace.service;
 
+import ie.shannen.runningrace.controller.model.RaceResult;
 import ie.shannen.runningrace.controller.model.ResultRequest;
 import ie.shannen.runningrace.controller.model.ResultResponse;
 import ie.shannen.runningrace.converter.ResultConverter;
@@ -13,6 +14,8 @@ import ie.shannen.runningrace.repository.model.RunnerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -42,5 +45,11 @@ public class ResultService {
         ResultEntity savedResult = resultRepository.save(resultEntity);
 
         return ResultConverter.entityToDto(savedResult);
+    }
+
+    public List<RaceResult> getRaceRunners(UUID id) {
+        List<ResultEntity> resultEntities = new ArrayList<>();
+        resultRepository.findAllByRaceId(id).forEach(resultEntities::add);
+        return ResultConverter.entityListToDtoList(resultEntities);
     }
 }
