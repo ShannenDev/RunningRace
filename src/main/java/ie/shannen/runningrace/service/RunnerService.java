@@ -7,6 +7,8 @@ import ie.shannen.runningrace.repository.model.RunnerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,5 +27,11 @@ public class RunnerService {
         RunnerEntity savedEntity = runnerRepository.save(runnerEntity);
 
         return RunnerConverter.entityToDto(savedEntity);
+    }
+
+    public List<Runner> getRunners() {
+        List<RunnerEntity> runnerEntities = new ArrayList<>();
+        runnerRepository.findAll().forEach(runnerEntities::add);
+        return RunnerConverter.entityListToDtoList(runnerEntities);
     }
 }

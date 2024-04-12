@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class RunnerController {
 
@@ -22,5 +24,11 @@ public class RunnerController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody Runner addRunner(@Valid @RequestBody Runner runner) {
         return runnerService.addRunner(runner);
+    }
+
+    @GetMapping(value = "/getRunners", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Runner> getRunners() {
+        return runnerService.getRunners();
     }
 }
