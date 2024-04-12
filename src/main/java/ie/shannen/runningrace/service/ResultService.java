@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ResultService {
-    private ResultRepository resultRepository;
-    private RaceRepository raceRepository;
-    private RunnerRepository runnerRepository;
+    private final ResultRepository resultRepository;
+    private final RaceRepository raceRepository;
+    private final RunnerRepository runnerRepository;
 
     @Autowired
     public ResultService(ResultRepository resultRepository, RaceRepository raceRepository, RunnerRepository runnerRepository) {

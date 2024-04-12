@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RaceService {
-    private RaceRepository raceRepository;
+    private final RaceRepository raceRepository;
 
     @Autowired
     public RaceService(RaceRepository raceRepository) {

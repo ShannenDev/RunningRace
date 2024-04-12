@@ -1,5 +1,6 @@
 package ie.shannen.runningrace.repository.model;
 
+import ie.shannen.runningrace.common.Gender;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
@@ -16,5 +17,5 @@ public class RunnerEntity {
 
     private String name;
     private Integer age;
-    private String sex;
+    private Gender gender;
 }
