@@ -1,6 +1,7 @@
 package ie.shannen.runningrace.controller.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,6 @@ public class Race {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private Double distance;
 }
