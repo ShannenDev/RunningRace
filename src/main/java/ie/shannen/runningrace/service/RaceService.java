@@ -2,6 +2,7 @@ package ie.shannen.runningrace.service;
 
 import ie.shannen.runningrace.controller.model.Race;
 import ie.shannen.runningrace.converter.RaceConverter;
+import ie.shannen.runningrace.exception.NotFoundException;
 import ie.shannen.runningrace.repository.RaceRepository;
 import ie.shannen.runningrace.repository.model.RaceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,17 @@ public class RaceService {
         List<RaceEntity> raceEntities = new ArrayList<>();
         raceRepository.findAll().forEach(raceEntities::add);
         return RaceConverter.entityListToDtoList(raceEntities);
+    }
+
+    public Race updateRace(UUID id, Race race) {
+        RaceEntity raceEntity = raceRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Race not found with id: " + id));
+
+        raceEntity.setName(race.getName());
+        raceEntity.setDistance(race.getDistance());
+
+        RaceEntity updatedEntity = raceRepository.save(raceEntity);
+
+        return RaceConverter.entityToDto(updatedEntity);
     }
 }

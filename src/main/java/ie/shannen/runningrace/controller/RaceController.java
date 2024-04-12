@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/race")
@@ -30,5 +31,11 @@ public class RaceController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<Race> getRaces() {
         return raceService.getRaces();
+    }
+
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public Race updateRace(@PathVariable UUID id, @Valid @RequestBody Race race) {
+        return raceService.updateRace(id, race);
     }
 }
