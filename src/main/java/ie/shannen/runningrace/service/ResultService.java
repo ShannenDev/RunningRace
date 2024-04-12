@@ -1,9 +1,11 @@
 package ie.shannen.runningrace.service;
 
 import ie.shannen.runningrace.controller.model.RaceResult;
+import ie.shannen.runningrace.controller.model.RaceResultAvg;
 import ie.shannen.runningrace.controller.model.ResultRequest;
 import ie.shannen.runningrace.controller.model.ResultResponse;
 import ie.shannen.runningrace.converter.ResultConverter;
+import ie.shannen.runningrace.exception.InternalServerException;
 import ie.shannen.runningrace.exception.NotFoundException;
 import ie.shannen.runningrace.repository.RaceRepository;
 import ie.shannen.runningrace.repository.ResultRepository;
@@ -48,8 +50,19 @@ public class ResultService {
     }
 
     public List<RaceResult> getRaceRunners(UUID id) {
+        return ResultConverter.entityListToDtoList(getRaceResults(id));
+    }
+
+    public RaceResultAvg getRaceResultAvg(UUID id) {
+        List<ResultEntity> resultEntities = getRaceResults(id);
+        double avgTime = resultEntities.stream().mapToDouble(ResultEntity::getTime).average()
+                .orElseThrow(() -> new InternalServerException("Unexpected error happened for race: " + id));
+        return new RaceResultAvg(avgTime);
+    }
+
+    private List<ResultEntity> getRaceResults(UUID raceId) {
         List<ResultEntity> resultEntities = new ArrayList<>();
-        resultRepository.findAllByRaceId(id).forEach(resultEntities::add);
-        return ResultConverter.entityListToDtoList(resultEntities);
+        resultRepository.findAllByRaceId(raceId).forEach(resultEntities::add);
+        return resultEntities;
     }
 }

@@ -1,6 +1,7 @@
 package ie.shannen.runningrace.controller;
 
 import ie.shannen.runningrace.controller.model.RaceResult;
+import ie.shannen.runningrace.controller.model.RaceResultAvg;
 import ie.shannen.runningrace.controller.model.ResultRequest;
 import ie.shannen.runningrace.controller.model.ResultResponse;
 import ie.shannen.runningrace.service.ResultService;
@@ -33,5 +34,11 @@ public class ResultController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<RaceResult> getRaceRunners(@PathVariable UUID id) {
         return resultService.getRaceRunners(id);
+    }
+
+    @GetMapping(value = "/race/{id}/avg", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public RaceResultAvg getAverageTime(@PathVariable UUID id) {
+        return resultService.getRaceResultAvg(id);
     }
 }
