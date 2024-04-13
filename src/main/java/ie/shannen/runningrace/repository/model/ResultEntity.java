@@ -13,7 +13,7 @@ public class ResultEntity {
     @Id
     private UUID id;
 
-    @OneToOne
+    @ManyToOne
     private RunnerEntity runnerEntity;
 
     @ManyToOne
