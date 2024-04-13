@@ -1,5 +1,6 @@
 package ie.shannen.runningrace.controller.model;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
@@ -19,5 +20,6 @@ public class ResultRequest {
     private UUID raceId;
 
     @NotNull
+    @Min(0)
     private Double time;
 }

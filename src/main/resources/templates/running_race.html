@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Running Race</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Running Race</h1>
+
+        <h2>Races</h2>
+        <ul id="races-list" th:each="race: ${raceStrings}">
+            <li th:text="${race}"></li>
+        </ul>
+
+        <h2>Runners</h2>
+        <ul id="runners-list" th:each="runner: ${runnerStrings}">
+            <li th:text="${runner}"></li>
+        </ul>
+
+        <h2>Create a new race</h2>
+        <form id="add-race-form" action="#" th:action="@{/addRace}" th:object="${race}" method="post">
+            <label for="race-name-input">Name: </label><input type="text" id="race-name-input" th:field="*{name}" placeholder="Race Name" required>
+            <label for="race-distance-input">Distance: </label><input type="number" step="0.01" id="race-distance-input" th:field="*{distance}" placeholder="Race Distance" required>
+            <button type="submit">Add Race</button>
+        </form>
+
+
+        <h2>Add a new runner</h2>
+        <form id="add-runner-form" action="#" th:action="@{/addRunner}" th:object="${runner}" method="post">
+            <label for="runner-name-input">Name: </label><input type="text" th:field="*{name}" id="runner-name-input" placeholder="Runner Name" required>
+            <label for="runner-age-input">Age: </label><input type="number" th:field="*{age}" id="runner-age-input" placeholder="Runner Age" required>
+            <label for="runner-gender-selector">Gender: </label><select id="runner-gender-selector" th:field="*{gender}">
+                <option value="" disabled selected>Select a gender</option>
+                <option value="FEMALE">Female</option>
+                <option value="MALE">Male</option>
+            </select>
+            <button type="submit">Add Runner</button>
+        </form>
+
+        <h2>Add new result</h2>
+        <form id="add-result-form" action="#" th:action="@{/addResult}" th:object="${result}" method="post">
+            <label for="result-race-selector">Race: </label><select id="result-race-selector" th:field="*{raceId}" required>
+                <option value="" disabled selected>Select a race</option>
+                <option th:each="race : ${races}" th:value="${race.getId()}" th:text="${race.getName()}"></option>
+            </select>
+            <label for="result-runner-selector">Runner: </label><select id="result-runner-selector" th:field="*{runnerId}" required>
+                <option value="" disabled selected>Select a runner</option>
+                <option  th:each="runner : ${runners}" th:value="${runner.getId()}" th:text="${runner.getName()}"></option>
+            </select>
+            <label for="result-time-input">Time: </label><input type="number" step="0.01" th:field="*{time}" id="result-time-input" placeholder="Add the time" required>
+            <button type="submit">Add Result</button>
+        </form>
+
+        <h2>Race results</h2>
+        <form id="get-race-results" action="#" th:action="@{/getRaceRunners}">
+            <label for="race-selector">Race: </label><select id="race-selector" th:field="*{race.id}">
+                <option value="" disabled selected>Select a race</option>
+                <option th:each="race : ${races}" th:value="${race.getId()}" th:text="${race.getName()}"></option>
+            </select>
+            <button type="submit">Get Results</button>
+        </form>
+    </div>
+</body>
+</html>

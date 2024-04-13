@@ -5,6 +5,7 @@ import ie.shannen.runningrace.controller.model.RaceResultAvg;
 import ie.shannen.runningrace.controller.model.ResultRequest;
 import ie.shannen.runningrace.controller.model.ResultResponse;
 import ie.shannen.runningrace.converter.ResultConverter;
+import ie.shannen.runningrace.exception.AlreadyExistsException;
 import ie.shannen.runningrace.exception.InternalServerException;
 import ie.shannen.runningrace.exception.NotFoundException;
 import ie.shannen.runningrace.repository.RaceRepository;
@@ -36,6 +37,14 @@ public class ResultService {
     public ResultResponse addResult(ResultRequest result) {
         RaceEntity race = raceRepository.findById(result.getRaceId())
                 .orElseThrow(() -> new NotFoundException("Race not found with id: " + result.getRaceId()));
+
+        Iterable<ResultEntity> existingResults = resultRepository.findAllByRaceId(result.getRaceId());
+        existingResults.forEach(existingResult -> {
+            if (existingResult.getRunnerEntity().getId().equals(result.getRunnerId())) {
+                throw new AlreadyExistsException("Runner already has a result for this race");
+            }
+        });
+        
         RunnerEntity runner = runnerRepository.findById(result.getRunnerId())
                 .orElseThrow(() -> new NotFoundException("Runner not found with id: " + result.getRunnerId()));
 

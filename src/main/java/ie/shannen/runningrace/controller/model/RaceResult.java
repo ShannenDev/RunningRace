@@ -11,4 +11,9 @@ import lombok.*;
 public class RaceResult {
     private String runnerName;
     private double time;
+
+    @Override
+    public String toString() {
+        return  runnerName + ": " + time + " minutes";
+    }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Race Results</title>
+</head>
+<body>
+<div class="container">
+
+    <h1 th:text="${currentRace}"></h1>
+
+    <h2>Average time</h2>
+    <p th:text="${averageTime}"></p>
+
+    <h2>Results</h2>
+    <ul id="result-list" th:each="result: ${resultStrings}">
+        <li th:text="${result}"></li>
+    </ul>
+
+    <form id="get-race-results" action="#" th:action="@{/getRaceRunners}">
+        <label for="race-selector">Race: </label><select id="race-selector" th:field="*{race.id}">
+            <option value="" disabled>Select a race</option>
+            <option th:each="race : ${races}" th:value="${race.getId()}" th:text="${race.getName()}"></option>
+        </select>
+        <button type="submit">Get Results</button>
+    </form>
+
+    <form action="/">
+        <input type="submit" value="Go Back" />
+    </form>
+</div>
+</body>
+</html>
