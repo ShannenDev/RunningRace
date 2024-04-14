@@ -1,5 +1,4 @@
 # Running Race
-## About
 Running Race is a web-based application dedicated to managing running races. It provides interfaces for users to browse existing races and add new ones.
 ## Technology Stack
 Running Race is built with the following technologies:
