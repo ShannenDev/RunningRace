@@ -1,0 +1,236 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /race/{id}:
+    put:
+      tags:
+        - race-controller
+      operationId: updateRace
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Race'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Race'
+  /runner:
+    get:
+      tags:
+        - runner-controller
+      operationId: getRunners
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Runner'
+    post:
+      tags:
+        - runner-controller
+      operationId: addRunner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Runner'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Runner'
+  /result:
+    post:
+      tags:
+        - result-controller
+      operationId: addResult
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResultRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultResponse'
+  /race:
+    get:
+      tags:
+        - race-controller
+      operationId: getRaces
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Race'
+    post:
+      tags:
+        - race-controller
+      operationId: addRace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Race'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Race'
+  /result/race/{id}:
+    get:
+      tags:
+        - result-controller
+      operationId: getRaceRunners
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RaceResult'
+  /result/race/{id}/avg:
+    get:
+      tags:
+        - result-controller
+      operationId: getAverageTime
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RaceResultAvg'
+components:
+  schemas:
+    Race:
+      required:
+        - distance
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        distance:
+          minimum: 0
+          type: number
+          format: double
+    Runner:
+      required:
+        - age
+        - gender
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        age:
+          minimum: 0
+          type: integer
+          format: int32
+        gender:
+          type: string
+    ResultRequest:
+      required:
+        - raceId
+        - runnerId
+        - time
+      type: object
+      properties:
+        runnerId:
+          type: string
+          format: uuid
+        raceId:
+          type: string
+          format: uuid
+        time:
+          minimum: 0
+          type: number
+          format: double
+    ResultResponse:
+      required:
+        - race
+        - runner
+        - time
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        runner:
+          $ref: '#/components/schemas/Runner'
+        race:
+          $ref: '#/components/schemas/Race'
+        time:
+          type: number
+          format: double
+    RaceResult:
+      type: object
+      properties:
+        runnerName:
+          type: string
+        time:
+          type: number
+          format: double
+    RaceResultAvg:
+      type: object
+      properties:
+        avgTime:
+          type: number
+          format: double

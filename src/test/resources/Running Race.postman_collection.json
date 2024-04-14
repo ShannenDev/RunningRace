@@ -1,0 +1,586 @@
+{
+	"info": {
+		"_postman_id": "43ad1ee0-afe5-4d4b-bcff-a63452afbe41",
+		"name": "Running Race",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1323064"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/runner",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {",
+							"  pm.expect(pm.response.code).to.equal(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.id).to.exist.and.to.not.be.empty;",
+							"    pm.expect(responseData.name).to.exist.and.to.not.be.empty;",
+							"    pm.expect(responseData.age).to.exist.and.to.be.a('number');",
+							"    pm.expect(responseData.gender).to.exist.and.to.not.be.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Id should be a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Age is a non-negative integer\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.age).to.be.a('number').and.to.be.at.least(0, \"Age should be a non-negative integer\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Gender is either male or female\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.gender).to.be.oneOf([\"male\", \"female\"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Jade Jennings\",\r\n    \"age\": 21,\r\n    \"gender\": \"FEMALE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/runner",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"runner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/runner",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"ID is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('array');",
+							"  responseData.forEach(function(data) {",
+							"    pm.expect(data.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"  });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Age is a non-negative integer\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('array');",
+							"  ",
+							"  responseData.forEach(function(runner) {",
+							"    pm.expect(runner.age).to.be.a('number');",
+							"    pm.expect(runner.age).to.be.at.least(0);",
+							"  });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Gender is either 'male' or 'female'\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    ",
+							"    responseData.forEach(function (data) {",
+							"        pm.expect(data.gender).to.be.oneOf(['male', 'female']);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/runner",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"runner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/race",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has required fields - id, name, and distance\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData).to.include.keys('id', 'name', 'distance');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Name is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Distance is a non-negative number\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.distance).to.be.a('number');",
+							"    pm.expect(responseData.distance).to.be.at.least(0);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is set to application/json\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Shadyside Run\",\r\n    \"distance\": 19.94\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/race",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"race"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/race",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify that the response is in JSON format\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify that the 'id' field is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function (race) {",
+							"        pm.expect(race.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify that the 'name' field is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('array');",
+							"  responseData.forEach(function(item) {",
+							"    pm.expect(item.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"  });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/race",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"race"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/race/99846c31-8b42-44ee-a2d3-243341a4b54e",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has required fields - id, name, and distance\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.id).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.name).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.distance).to.exist.and.to.be.a('number');",
+							"});",
+							"",
+							"",
+							"pm.test(\"ID is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData.id).to.exist.and.to.be.a('string').and.to.have.length.above(0);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Name is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.name).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Distance is a non-negative integer\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData.distance).to.be.a('number');",
+							"  pm.expect(responseData.distance).to.be.at.least(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sunrise Sprint\",\r\n    \"distance\": 10.50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/race/99846c31-8b42-44ee-a2d3-243341a4b54e",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"race",
+						"99846c31-8b42-44ee-a2d3-243341a4b54e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/result",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {",
+							"  pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.id).to.exist;",
+							"  pm.expect(responseData.runner).to.exist;",
+							"  pm.expect(responseData.race).to.exist;",
+							"  pm.expect(responseData.time).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the runner object\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.runner).to.exist.and.to.be.an('object');",
+							"  pm.expect(responseData.runner.id).to.exist.and.to.be.a('string');",
+							"  pm.expect(responseData.runner.name).to.exist.and.to.be.a('string');",
+							"  pm.expect(responseData.runner.age).to.exist.and.to.be.a('number');",
+							"  pm.expect(responseData.runner.gender).to.exist.and.to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the race object\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.race).to.be.an('object');",
+							"  pm.expect(responseData.race.id).to.exist.and.to.be.a('string');",
+							"  pm.expect(responseData.race.name).to.exist.and.to.be.a('string');",
+							"  pm.expect(responseData.race.distance).to.exist.and.to.be.a('number');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Time is a non-negative integer\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.time).to.be.a('number');",
+							"  pm.expect(responseData.time).to.be.at.least(0, \"Time should be non-negative\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"raceId\": \"931cbd31-8c02-4316-838f-4a4b8ffbefe2\",\r\n    \"runnerId\": \"698f16c6-fa03-4506-b3ea-6b1399d16fc1\",\r\n    \"time\": 260.41\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/result",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"result"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/result/race/99846c31-8b42-44ee-a2d3-243341a4b54e",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - runnerName and time\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"    ",
+							"    responseData.forEach(function(item) {",
+							"        pm.expect(item.runnerName).to.exist.and.to.be.a('string');",
+							"        pm.expect(item.time).to.exist.and.to.be.a('number');",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"RunnerName is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('array');",
+							"",
+							"    responseData.forEach(function (item) {",
+							"        pm.expect(item.runnerName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Time is a non-negative number\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData).to.be.an('array');",
+							"  ",
+							"  responseData.forEach(function(runner) {",
+							"    pm.expect(runner.time).to.be.a('number');",
+							"    pm.expect(runner.time).to.be.at.least(0);",
+							"  });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/result/race/99846c31-8b42-44ee-a2d3-243341a4b54e",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"result",
+						"race",
+						"99846c31-8b42-44ee-a2d3-243341a4b54e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/result/race/99846c31-8b42-44ee-a2d3-243341a4b54e/avg",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required field - avgTime\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.avgTime).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"avgTime is a non-negative number\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.avgTime).to.be.a('number');",
+							"  pm.expect(responseData.avgTime).to.be.at.least(0, \"avgTime should be a non-negative number\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"avgTime is in the expected range\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.avgTime).to.exist.and.to.be.a('number');",
+							"    pm.expect(responseData.avgTime).to.be.at.least(0, \"avgTime should be greater than or equal to 0\");",
+							"    pm.expect(responseData.avgTime).to.be.at.most(100, \"avgTime should be less than or equal to 100\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/result/race/99846c31-8b42-44ee-a2d3-243341a4b54e/avg",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"result",
+						"race",
+						"99846c31-8b42-44ee-a2d3-243341a4b54e",
+						"avg"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

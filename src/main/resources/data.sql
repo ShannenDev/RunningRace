@@ -13,4 +13,4 @@ insert into result_entity (id, race_entity_id, runner_entity_id, time) values ('
 insert into result_entity (id, race_entity_id, runner_entity_id, time) values ('fb849e70-9318-4e0a-9a67-979f1ae88666', '931cbd31-8c02-4316-838f-4a4b8ffbefe2', 'd10ba8c3-2605-4372-a8a5-228b93b6883f', 204.13);
 insert into result_entity (id, race_entity_id, runner_entity_id, time) values ('2ae50dab-e98c-4238-be0e-e8a252b1ab32', '931cbd31-8c02-4316-838f-4a4b8ffbefe2', '2d98bb57-6036-4621-9a82-ad42bc623502', 223.45);
 insert into result_entity (id, race_entity_id, runner_entity_id, time) values ('05893c71-b5f5-4282-acdc-5b286133f7fd', '931cbd31-8c02-4316-838f-4a4b8ffbefe2', '37c650ef-c9f2-4f64-96f6-9f523f27f927', 242.36);
-insert into result_entity (id, race_entity_id, runner_entity_id, time) values ('7215c038-b6ec-431f-94ee-4f6528028503', '931cbd31-8c02-4316-838f-4a4b8ffbefe2', '698f16c6-fa03-4506-b3ea-6b1399d16fc1', 260.41);
+-- insert into result_entity (id, race_entity_id, runner_entity_id, time) values ('7215c038-b6ec-431f-94ee-4f6528028503', '931cbd31-8c02-4316-838f-4a4b8ffbefe2', '698f16c6-fa03-4506-b3ea-6b1399d16fc1', 260.41);

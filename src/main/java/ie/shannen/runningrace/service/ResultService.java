@@ -44,7 +44,7 @@ public class ResultService {
                 throw new AlreadyExistsException("Runner already has a result for this race");
             }
         });
-        
+
         RunnerEntity runner = runnerRepository.findById(result.getRunnerId())
                 .orElseThrow(() -> new NotFoundException("Runner not found with id: " + result.getRunnerId()));
 
@@ -64,6 +64,9 @@ public class ResultService {
 
     public RaceResultAvg getRaceResultAvg(UUID id) {
         List<ResultEntity> resultEntities = getRaceResults(id);
+        if (resultEntities.isEmpty()) {
+            throw new NotFoundException("No results found for race: " + id);
+        }
         double avgTime = resultEntities.stream().mapToDouble(ResultEntity::getTime).average()
                 .orElseThrow(() -> new InternalServerException("Unexpected error happened for race: " + id));
         return new RaceResultAvg(avgTime);
